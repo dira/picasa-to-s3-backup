@@ -8,7 +8,6 @@ class S3Backup
       access_key_id:     config['aws_api_key'],
       secret_access_key: config['aws_secret_key']
     )
-    AWS::S3::DEFAULT_HOST.replace 's3-eu-west-1.amazonaws.com'
     @bucket = AWS::S3::Bucket.find(config['bucket'])
   end
 
