@@ -24,7 +24,7 @@ class PicasaToS3
 private
 
   def albums
-    @albums = PicasaDownloader.albums(@picasa_username)[:albums]
+    @albums ||= PicasaDownloader.albums(@picasa_username)[:albums]
   end
 
   def albums_folder
