@@ -1,0 +1,2 @@
+class LightPicasaError < StandardError
+end
