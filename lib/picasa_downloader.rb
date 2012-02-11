@@ -32,10 +32,11 @@ class PicasaDownloader
     end
     puts
 
+    # save the full json
+    json[:photos] = photos_json
+    File.open(File.join(folder, 'data.json'),      'w') { |f| f.write json }
+
     if status.all?
-      # save the full json
-      json[:photos] = photos_json
-      File.open(File.join(folder, 'data.json'),      'w') { |f| f.write json }
       # save updated at
       File.open(File.join(folder, 'updated_at.txt'), 'w') { |f| f.write json[:updated] }
       folder_name
