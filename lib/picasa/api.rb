@@ -1,6 +1,6 @@
 require 'net/http'
 require 'json'
-require File.join(File.dirname(__FILE__), 'picasa_error.rb')
+require File.join(File.dirname(__FILE__), 'error.rb')
 
 class PicasaAPI
   API_BASE = 'http://picasaweb.google.com/data/feed/api'
@@ -12,7 +12,7 @@ class PicasaAPI
   end
 
   def self.api_url_album(username, album_id)
-    global_fields = "gphoto:id"
+    global_fields = "gphoto:id,title"
     entry_fields = "content,media:group(media:description),gphoto:id,gphoto:timestamp,title,gphoto:width,gphoto:height"
     URI.parse("#{API_BASE}/user/#{URI.escape(username)}/albumid/#{URI.escape(album_id)}?alt=json&imgmax=d&fields=#{global_fields},entry(#{entry_fields})")
   end
@@ -40,17 +40,18 @@ class PicasaAPI
 
     feed = JSON.parse(response.body)['feed']
     photos = (feed['entry'] || []).map do |photo|
-      { :src => photo["content"]["src"],
-        :id => photo["gphoto$id"]["$t"],
-        :title => photo["title"]["$t"],
-        :description => photo["media$group"]["media$description"]["$t"],
-        :width => photo["gphoto$width"]["$t"],
-        :height => photo["gphoto$height"]["$t"],
-        :time => Time.at(photo["gphoto$timestamp"]["$t"].to_i / 1000).utc
+      { src: photo["content"]["src"],
+        id: photo["gphoto$id"]["$t"],
+        title: photo["title"]["$t"],
+        description: photo["media$group"]["media$description"]["$t"],
+        width: photo["gphoto$width"]["$t"],
+        height: photo["gphoto$height"]["$t"],
+        time: Time.at(photo["gphoto$timestamp"]["$t"].to_i / 1000).utc,
       }
     end
-    { :id => feed["gphoto$id"]["$t"],
-      :photos => photos
+    { id: feed['gphoto$id']['$t'],
+      title: feed['title']['$t'],
+      photos: photos,
     }
   end
 
