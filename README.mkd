@@ -1,0 +1,17 @@
+This is a set of tools for
+* listing all the public albums of a Picasa user
+* downloading all pictures from a public album of a Picasa user
+* uploading a folder (and all its files) to S3
+
+Usage
+
+1. Fill in correct data in `config/picasa.yml` and `config/s3.yml`
+1. Get the list of albums for the picasa user
+
+    ruby list.rb
+1. Download the pictures from an album
+
+    ruby download.rb <album_id>
+1. Upload the created folder to S3
+
+    ruby upload.rb albums/<picasa_username>/<folder>
