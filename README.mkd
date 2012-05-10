@@ -15,3 +15,8 @@ Usage
 1. Upload the created folder to S3
 
     ruby upload.rb albums/<picasa_username>/<folder>
+
+
+Sync the latest album:
+
+ruby list.rb | tail -1 | cut -f 1 -d ' ' | xargs ruby download.rb | tail -1 | xargs -I {} ruby upload.rb 'albums/irina.dumitrascu/{}'
