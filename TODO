@@ -1,0 +1,5 @@
+Add s3 list
+Upload - print whole path of the created folder
+Fix somehow the assumptions about where the files are stored / the path where they are uploaded
+ - move all s3 files to albums/ ?
+ - send the path though the command line, with default = 'albums'?
