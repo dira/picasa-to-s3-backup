@@ -46,8 +46,6 @@ class PicasaDownloader
     end
     puts
 
-    # save the full json
-    json[:photos] = json
     File.open(File.join(folder, 'data.json'),      'w') { |f| f.write json }
 
     if status.all?
