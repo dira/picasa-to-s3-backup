@@ -12,7 +12,7 @@ class PicasaAPI
   end
 
   def self.api_url_album(username, album_id)
-    global_fields = "gphoto:id,title"
+    global_fields = "gphoto:id,title,updated"
     entry_fields = "content,media:group(media:description),gphoto:id,gphoto:timestamp,title,gphoto:width,gphoto:height"
     URI.parse("#{API_BASE}/user/#{URI.escape(username)}/albumid/#{URI.escape(album_id)}?alt=json&imgmax=d&fields=#{global_fields},entry(#{entry_fields})")
   end
@@ -49,9 +49,10 @@ class PicasaAPI
         time: Time.at(photo["gphoto$timestamp"]["$t"].to_i / 1000).utc,
       }
     end
-    { id: feed['gphoto$id']['$t'],
-      title: feed['title']['$t'],
-      photos: photos,
+    { id:      feed['gphoto$id']['$t'],
+      title:   feed['title']['$t'],
+      updated: feed['updated']['$t'],
+      photos:  photos,
     }
   end
 
