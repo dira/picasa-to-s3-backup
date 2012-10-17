@@ -7,7 +7,7 @@ class PicasaAPI
 
   def  self.api_url_user(username)
     global_fields = 'id'
-    entry_fields = 'title,gphoto:id,gphoto:name,gphoto:numphotos,gphoto:user,updated'
+    entry_fields = 'title,gphoto:id,gphoto:name,gphoto:numphotos,gphoto:user,updated,gphoto:location'
     URI.parse("#{API_BASE}/user/#{URI.escape(username)}?alt=json&fields=#{global_fields},entry(#{entry_fields})")
   end
 
@@ -28,6 +28,7 @@ class PicasaAPI
         uri:       album['gphoto$name']['$t'],
         nr_photos: album['gphoto$numphotos']['$t'],
         username:  album['gphoto$user']['$t'],
+        location:  album['gphoto$location']['$t'],
         updated:   album['updated']['$t'],
       }
     end
